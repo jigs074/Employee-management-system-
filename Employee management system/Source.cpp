@@ -1,7 +1,6 @@
 #include <iostream>
 using namespace std;
-
-
+#include <cstdlib>
 // Jignesh Patel 
 
 class Employee_Node {
@@ -15,6 +14,8 @@ public:
 
 }; 
 class Linkedlist {
+public :
+
 	Employee_Node* head = NULL;
 	void Insert() {
 		string Fname; 
@@ -51,36 +52,81 @@ class Linkedlist {
 
 
 	}
+
 	void searchRecord() {
-		int Eid; 
-	
-		
+		int Eno =0 ;
+
+		int i =0;
+
+
 		if (head == NULL) {
 			cout << "Error: Linked list is empty" << endl;
 
 		}
 		else {
 			cout << "Enter the Id of an Employee you are looking for " << endl;
-			cin >> Eid;
-			Employee_Node* ptr = head; 
-		
-			while (head != NULL) {
-				if (ptr->employeeId== Eid) {
+			cin >> Eno;
+			Employee_Node* ptr = head;
 
-					cout << "Record Found" << endl; 
+			while (ptr!= NULL) {
+				if (Eno == ptr->employeeId) {
+
+					cout << "Record Found" << endl;
 					cout << "Employee's first Name : " << ptr->firstName << endl;
-					cout << "Employee's last Name :" << ptr->LastName << endl; 
-					cout << "Employee id : " << ptr->employeeId << endl; 
+					cout << "Employee's last Name :" << ptr->LastName << endl;
+					cout << "Employee id : " << ptr->employeeId << endl;
+					i++;
+
 				}
+				ptr = ptr->next; 
+
 			}
+			if (i == 0) {
+				cout << "Error , Eid cannot find";
+
+			}
+
 		}
+
 	}
+	int count_Nodes() {
+		if (head == NULL) {
+			cout << "Linked list empty "; 
+
+		}
+		int i = 0; 
+		Employee_Node* ptr = head; 
+		if (ptr != NULL) {
+			i++; 
+			ptr = ptr->next; 
+
+
+		}
+	
+		return i; 
+	}
+
 };
 
 
 int main(void) {
+	Linkedlist obj; 
+	int choice; 
+	
+	cout << "Welcome to the employee management system " << endl;
+	cout << "Enter how many Employee Records you want to insert : " << endl; 
+	cin >> choice; 
+	for (int i = 0; i < choice; i++) {
+		obj.Insert(); 
+
+	}
+	cout << "Total number of  Employees registered in a record is " << obj.count_Nodes() << endl;
+     
 
 
+	cout <<"To find an Employee 's record Enter the Employee id of an employee "<<endl; 
+	obj.searchRecord(); 
 
 
-}
+	}
+
