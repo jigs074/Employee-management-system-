@@ -1,6 +1,9 @@
 #include <iostream>
 using namespace std;
+
 #include <cstdlib>
+#include <fstream>
+
 // Jignesh Patel 
 
 class Employee_Node {
@@ -9,7 +12,7 @@ public:
 	string firstName;
 	string LastName;
 	int employeeId;
-	//int salary;
+	
 	Employee_Node* next;
 
 }; 
@@ -20,7 +23,7 @@ public :
 	void Insert() {
 		string Fname; 
 		string Lname;
-		int Eid; 
+		 long int Eid; 
 		int pay; 
 		Employee_Node* new_node = new Employee_Node;
 		cout << "Enter the first Name : " << endl;
@@ -29,12 +32,13 @@ public :
 		cin >> Lname; 
 		cout << "Enter the Employee id of Employee" << endl; 
 		cin >> Eid; 
-           
+		
 		new_node->firstName = Fname;
 		new_node->LastName = Lname;
 		new_node->employeeId = Eid; 
-		// new_node->salary = pay; 
+		 
 		new_node->next = NULL; 
+
 		if (head == NULL) {
 			head = new_node; 
 
@@ -46,14 +50,28 @@ public :
 
 			}
 			ptr->next = new_node; 
-
+			
 		}
+		
 		cout << "Node inserted sucessfully " << endl;
+		ofstream recordFile; 
+		recordFile.open("sourceFile.txt" , ios::app );
+		if (!recordFile) {
+			cout << "Cannot open File "; 
+			
+		}
+		
+		recordFile << Fname << endl; 
+		recordFile << Lname << endl; 
+		recordFile << Eid << endl; 
+		
 
+		recordFile.close(); 
 
 	}
 
 	void searchRecord() {
+
 		int Eno =0 ;
 
 		int i =0;
@@ -67,6 +85,11 @@ public :
 			cout << "Enter the Id of an Employee you are looking for " << endl;
 			cin >> Eno;
 			Employee_Node* ptr = head;
+			//stream recordFile; 
+			// ecordFile.open("sourceFile.txt", ios::app);
+			ofstream destFile; 
+			destFile.open("RecordFile.txt", ios::app);
+
 
 			while (ptr!= NULL) {
 				if (Eno == ptr->employeeId) {
@@ -75,9 +98,18 @@ public :
 					cout << "Employee's first Name : " << ptr->firstName << endl;
 					cout << "Employee's last Name :" << ptr->LastName << endl;
 					cout << "Employee id : " << ptr->employeeId << endl;
+					destFile << "The record of an Employee you searched for " << endl;
+					destFile << ptr->firstName << endl; 
+					destFile << ptr->LastName << endl; 
+					destFile << ptr->employeeId << endl;
+					
+
 					i++;
+					cout << "Employee 's record has been stored in a text file" << endl;
+
 
 				}
+
 				ptr = ptr->next; 
 
 			}
@@ -105,7 +137,7 @@ public :
 	
 		return i; 
 	}
-
+	
 };
 
 
@@ -120,7 +152,7 @@ int main(void) {
 		obj.Insert(); 
 
 	}
-	cout << "Total number of  Employees registered in a record is " << obj.count_Nodes() << endl;
+
      
 
 
